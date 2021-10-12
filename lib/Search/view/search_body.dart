@@ -24,11 +24,12 @@ class SearchBody extends StatelessWidget {
             },
           );
         } else if (state.status == 'failed') {
+          Navigator.pop(context);
           showDialog(
             context: context,
             builder: (context) {
-              return const AlertDialog(
-                content: Center(child: Text("Search failed")),
+              return AlertDialog(
+                content: Center(child: Text(state.exception.toString())),
               );
             },
           );

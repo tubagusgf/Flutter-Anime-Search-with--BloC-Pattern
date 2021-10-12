@@ -1,4 +1,5 @@
 import 'package:anime/anime.dart';
+import 'package:anime_search/util/api_error.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -19,9 +20,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       final anime = await AnimeRepository.getAnimeFromTitle(event.title);
       return emit(state.copyWith(
           status: 'success', title: anime.title, imageUrl: anime.imageUrl));
-    } catch (e) {
+    } on Exception catch (e) {
       // print(e);
-      return emit(state.copyWith(status: 'failed'));
+      return emit(state.copyWith(
+        status: 'failed',
+        exception: e,
+      ));
     }
   }
 }
